@@ -3,8 +3,16 @@ require 'spec_helper'
 
 describe CamOnHudson do
 
-  context "when it is initialized, it" do
-    it "looks to see if there is a schedule for it."
+  let(:cam){ CamOnHudson.new }
+
+  context "#initialize" do
+    context "loads the day's schedule" do
+      it "as @schedule" do
+        expect(cam.instance_variable_get(:@schedule)).not_to be_nil
+      end
+    end
+    it "loads the day's schedule, in a file called yyyy-mm-dd-schedule.yml"
+    it "builds a schedule if none exists"
   end
 
 end
