@@ -23,6 +23,19 @@ describe CamOnHudson do
 
   end
 
+  context "@configs" do
+
+    context "When there is no 'configs.yml'" do
+      it "'configs.yml' is created anew" do
+        config_file = "configs.yml"
+        File.delete(config_file)
+        CamOnHudson.new
+        expect(File.exists? config_file).to be true
+      end
+    end
+
+  end
+
       # it "as @schedule" do
       #   expect(local_cam.instance_variable_get :@schedule ).not_to be_nil
       # end
