@@ -1,3 +1,3 @@
 require "./camonhudson"
 
-c = CamOnHudson.new
+CamOnHudson.new

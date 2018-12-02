@@ -28,11 +28,24 @@ class CamOnHudson
   end
 
   def tweet
-    if ENV['RAILS_ENV'] = 'test'
-      true
+    if ENV['RAILS_ENV'] == 'test'
+      puts "in test"
     else
-      puts "not testing"
-      
+      now = Time.now
+      solar_times = sun_schedule Date.today
+      tweet = Tweet.new
+      tweet.text = ""
+      if now - solar_times[:sunrise] < 120
+        tweet.text = "🌅 at #{now} in New York City"
+      elsif solar_times[:sunset] - now < 120
+        tweet.text = "🌇 at #{now} in New York City"
+      elsif rand < @configs[:rate]
+        tweet.text = "Greetings from 🗽 at #{now}"
+      end
+      unless tweet.text == ""
+        puts tweet.text
+        tweet.post
+      end
     end
   end
 
@@ -61,8 +74,8 @@ class CamOnHudson
   def sun_schedule(date)
     calculator = SunTimes.new
       { 
-        sunrise: calculator.rise(date, @@latitude, @@longitude).getlocal,
-        sunset: calculator.set(date, @@latitude, @@longitude).getlocal
+        sunrise: calculator.rise(date, @configs[:latitude], @configs[:longitude]).getlocal,
+        sunset: calculator.set(date, @configs[:latitude], @configs[:longitude]).getlocal
       }
   end
 
