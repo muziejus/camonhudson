@@ -4,26 +4,32 @@ require 'sun_times'
 
 class CamOnHudson
 
-  @@latitude = 40.818017
-  @@longitude = -73.960409
   @@configs_file = "configs.yml"
 
   def initialize
     @configs = configs
+    take_photo if camera?
+  end
+
+  def camera?
+    true if `imagesnap -l` =~ /#{@configs[:camera]}/
+  end
+
+  def take_photo
+    true
+  end
+
+  def tweet
+    true
   end
 
   private
 
   def configs
     if File.exists? @@configs_file
-      loaded_configs = YAML::load_file @@configs_file
-      if loaded_configs[:today] == Date.today
-        loaded_configs
-      else
-        create_configs_file
-      end
+      YAML::load_file @@configs_file
     else
-      create_configs_file
+      raise "No configs.yml. See configs.yml.example"
     end
   end
 
