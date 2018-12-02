@@ -1,6 +1,8 @@
 require 'date'
 require 'yaml'
+require 'rmagick'
 require 'sun_times'
+require './tweet'
 
 class CamOnHudson
 
@@ -8,6 +10,8 @@ class CamOnHudson
 
   def initialize
     @configs = configs
+    @raw_image = File.join Dir.getwd, "image-raw.png"
+    @cropped_image = File.join Dir.getwd, "image-cropped.png"
     take_photo if camera?
   end
 
@@ -16,18 +20,27 @@ class CamOnHudson
   end
 
   def take_photo
-    true
+    `imagesnap -d #{@configs[:camera]} -w 5 #{@raw_image}`
+    image = Magick::Image.read(@raw_image).first
+    cropped_image = image.crop(141, 0, 1697, 950)
+    cropped_image.write(@cropped_image)
+    tweet
   end
 
   def tweet
-    true
+    if ENV['RAILS_ENV'] = 'test'
+      true
+    else
+      puts "not testing"
+      
+    end
   end
 
   private
 
   def configs
     if File.exists? @@configs_file
-      YAML::load_file @@configs_file
+      YAML::load_file(@@configs_file)
     else
       raise "No configs.yml. See configs.yml.example"
     end
