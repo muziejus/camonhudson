@@ -36,8 +36,8 @@ describe CamOnHudson do
       end
     end
 
-    it "has a :sun_schedule" do
-      expect(configs.keys.include? :sun_schedule).to be true
+    it "has a :today that is equal to today" do
+      expect(configs[:today]).to eq Date.today
     end
 
     context ":sun_schedule" do

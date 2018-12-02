@@ -14,10 +14,14 @@ class CamOnHudson
 
   private
 
-
   def configs
     if File.exists? @@configs_file
-      YAML::load_file @@configs_file
+      loaded_configs = YAML::load_file @@configs_file
+      if loaded_configs[:today] == Date.today
+        loaded_configs
+      else
+        create_configs_file
+      end
     else
       create_configs_file
     end
@@ -26,6 +30,7 @@ class CamOnHudson
   def create_configs_file
     today = Date.today
     configs_object = {
+      today: today,
       sun_schedule: sun_schedule(today)
     }
     File.open(@@configs_file, "w") do |file|
