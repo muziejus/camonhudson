@@ -1,4 +1,5 @@
 *.yml
+*.png
 *.gem
 *.rbc
 /.config
