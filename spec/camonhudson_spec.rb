@@ -32,6 +32,10 @@ describe CamOnHudson do
     pending
   end
 
+  context "#tweet" do
+    pending
+  end
+
   context "@configs" do
 
     let(:configs){ CamOnHudson.new.instance_variable_get(:@configs) }
