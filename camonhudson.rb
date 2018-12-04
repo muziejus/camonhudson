@@ -12,39 +12,52 @@ class CamOnHudson
     @configs = configs
     @raw_image = File.join Dir.getwd, "image-raw.png"
     @cropped_image = File.join Dir.getwd, "image-cropped.png"
-    take_photo if camera?
+    tweet
   end
 
   def camera?
-    true if `imagesnap -l` =~ /#{@configs[:camera]}/
+    `/usr/local/bin/imagesnap -l` =~ /#{@configs[:camera]}/
   end
 
   def take_photo
-    `imagesnap -d #{@configs[:camera]} -w 5 #{@raw_image}`
+    script_path = "/tmp/imagesnap.sh"
+    File.open(script_path, "w") do |f|
+      f.puts "#!/bin/sh"
+      f.puts "/usr/local/bin/imagesnap -d #{@configs[:camera]} -w 5 #{@raw_image}"
+    end
+    system "chmod 755 #{script_path}"
+    system "open -Fga Terminal.app /tmp/imagesnap.sh ; sleep 10 ; killall Terminal"
+    sleep 20 # Wait to crop just in case.
     image = Magick::Image.read(@raw_image).first
     cropped_image = image.crop(141, 0, 1697, 950)
     cropped_image.write(@cropped_image)
-    tweet
+    File.delete(@raw_image)
   end
 
   def tweet
     if ENV['RAILS_ENV'] == 'test'
       puts "in test"
     else
+      coin = rand
       now = Time.now
       solar_times = sun_schedule Date.today
-      tweet = Tweet.new
-      tweet.text = ""
-      if now - solar_times[:sunrise] < 120
-        tweet.text = "🌅 at #{now} in New York City"
-      elsif solar_times[:sunset] - now < 120
-        tweet.text = "🌇 at #{now} in New York City"
-      elsif rand < @configs[:rate]
-        tweet.text = "Greetings from 🗽 at #{now}"
+      tweet_post = Tweet.new
+      tweet_post.text = ""
+      if (now - solar_times[:sunrise]).between?(0, 120)
+        tweet_post.text = "🌅 at #{now} in New York City"
+      elsif (solar_times[:sunset] - now).between?(0, 120)
+        tweet_post.text = "🌇 at #{now} in New York City"
+      elsif coin < @configs[:rate]
+        tweet_post.text = "Greetings from 🗽 at #{now}"
       end
-      unless tweet.text == ""
-        puts tweet.text
-        tweet.post
+      unless tweet_post.text == ""
+        if camera?
+          take_photo
+          puts "#{now}: #{tweet_post.text}"
+          tweet_post.post
+        else
+          puts "#{now} No camera."
+        end
       end
     end
   end
