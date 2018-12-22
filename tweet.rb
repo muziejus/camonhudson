@@ -10,7 +10,7 @@ class Tweet
   end
 
   def post
-    @client.update_with_media @text, File.new(File.join Dir.getwd, "image-cropped.png")
+    @client.update_with_media @text, File.new(File.join Dir.getwd, "image-cropped.jpg")
   end
 
   private

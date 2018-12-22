@@ -10,23 +10,17 @@ class CamOnHudson
 
   def initialize
     @configs = configs
-    @raw_image = File.join Dir.getwd, "image-raw.png"
-    @cropped_image = File.join Dir.getwd, "image-cropped.png"
+    @raw_image = File.join Dir.getwd, "image-raw.jpg"
+    @cropped_image = File.join Dir.getwd, "image-cropped.jpg"
     tweet
   end
 
   def camera?
-    `/usr/local/bin/imagesnap -l` =~ /#{@configs[:camera]}/
+    true
   end
 
   def take_photo
-    script_path = "/tmp/imagesnap.sh"
-    File.open(script_path, "w") do |f|
-      f.puts "#!/bin/sh"
-      f.puts "/usr/local/bin/imagesnap -d '#{@configs[:camera]}' -w 5 #{@raw_image}"
-    end
-    system "chmod 755 #{script_path}"
-    system "open -Fga Terminal.app /tmp/imagesnap.sh ; sleep 10 ; killall Terminal"
+    system "fswebcam -r 1920x1080 --no-banner #{@raw_image}"
     sleep 20 # Wait to crop just in case.
     image = Magick::Image.read(@raw_image).first
     cropped_image = image.crop(156, 0, 1682, 950)
