@@ -23,13 +23,13 @@ class CamOnHudson
     script_path = "/tmp/imagesnap.sh"
     File.open(script_path, "w") do |f|
       f.puts "#!/bin/sh"
-      f.puts "/usr/local/bin/imagesnap -d #{@configs[:camera]} -w 5 #{@raw_image}"
+      f.puts "/usr/local/bin/imagesnap -d '#{@configs[:camera]}' -w 5 #{@raw_image}"
     end
     system "chmod 755 #{script_path}"
     system "open -Fga Terminal.app /tmp/imagesnap.sh ; sleep 10 ; killall Terminal"
     sleep 20 # Wait to crop just in case.
     image = Magick::Image.read(@raw_image).first
-    cropped_image = image.crop(141, 0, 1697, 950)
+    cropped_image = image.crop(156, 0, 1682, 950)
     cropped_image.write(@cropped_image)
     File.delete(@raw_image)
   end
