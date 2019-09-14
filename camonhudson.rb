@@ -20,12 +20,13 @@ class CamOnHudson
   end
 
   def take_photo
-    system "fswebcam -c fswebcam.conf -r 1920x1080 --no-banner #{@raw_image}"
-    sleep 20 # Wait to crop just in case.
-    image = Magick::Image.read(@raw_image).first
-    cropped_image = image.crop(156, 0, 1682, 950)
-    cropped_image.write(@cropped_image)
-    File.delete(@raw_image)
+    system "raspistill -o #{@raw_image}"
+    #system "fswebcam -c fswebcam.conf -r 1920x1080 --no-banner #{@raw_image}"
+    #sleep 20 # Wait to crop just in case.
+    #image = Magick::Image.read(@raw_image).first
+    #cropped_image = image.crop(156, 0, 1682, 950)
+    #cropped_image.write(@cropped_image)
+    #File.delete(@raw_image)
   end
 
   def tweet
