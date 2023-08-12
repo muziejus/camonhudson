@@ -1,4 +1,4 @@
-generate_oauth_tokens.rb
+*.log
 *.yml
 *.png
 *.gem
