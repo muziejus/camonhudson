@@ -1,6 +1,7 @@
 *.log
 *.yml
 *.png
+/dist
 /node_modules
 /tmp/
 

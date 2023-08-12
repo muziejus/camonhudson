@@ -1,9 +1,6 @@
 import { RichText, BskyAgent } from "@atproto/api";
 
 export default async function agent(identifier: string, password: string) {
-  // const identifier = "camonhudson@moacir.moacir.com";
-  // const password = "SERAGLIO*homebred3fleabane4palatine"
-  console.log(identifier, " , ", password);
   const agent = new BskyAgent({ service: "https://bsky.social/"});
   await agent.login({
     identifier,
