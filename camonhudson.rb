@@ -3,6 +3,7 @@ require 'yaml'
 require 'rmagick'
 require 'sun_times'
 require './tweet'
+require 'fileutils'
 
 class CamOnHudson
 
@@ -42,12 +43,14 @@ class CamOnHudson
         tweet_post.text = "🌅 at #{now} in New York City"
       elsif (solar_times[:sunset] - now).between?(0, 120)
         tweet_post.text = "🌇 at #{now} in New York City"
+#       else
       elsif coin < @configs[:rate]
         tweet_post.text = "Greetings from 🗽 at #{now}"
       end
       unless tweet_post.text == ""
         if camera?
           take_photo
+	  FileUtils.cp(@raw_image, "./images/#{Time.now.to_i}_snap.jpg")
           puts "#{now}: #{tweet_post.text}"
           tweet_post.post
         else
