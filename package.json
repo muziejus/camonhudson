@@ -50,6 +50,7 @@
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
     "@types/node": "^20.4.10",
+    "@types/suncalc": "^1.9.0",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-formatter-pretty": "^5.0.0",
@@ -63,6 +64,8 @@
   },
   "dependencies": {
     "@atproto/api": "^0.6.3",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "pi-camera": "^1.7.0",
+    "suncalc": "^1.9.0"
   }
 }

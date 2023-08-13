@@ -1,14 +1,18 @@
-import dotenv from "dotenv";
 import agent from "./bluesky/agent";
-// import post from "./bluesky/post";
+import post from "./bluesky/post";
+import getConfig from "./config";
+import flipCoin from "./flip-coin";
+import getSkeetText from "./get-skeet-text";
 
-dotenv.config();
+const config = getConfig();
 
-const identifier = process.env.BLUESKY_BOT_IDENTIFIER as string;
-const password = process.env.BLUESKY_BOT_PASSWORD as string;
+// const doIRun = flipCoin(rate, latitude, longitude);
+const doIRun = "post";
 
-// const bskyAgent = await 
-//
-agent(identifier, password)//.then(bskyAgent => post(bskyAgent));
+if(doIRun){
+  const text = getSkeetText(doIRun);
+  console.log(text);
+  agent(config)
+    .then(bskyAgent => post(bskyAgent, text, config));
+}
 
-// post(bskyAgent);
