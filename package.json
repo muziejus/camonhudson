@@ -5,7 +5,7 @@
   "private": true,
   "repository": "git@github.com:muziejus/camonhudson.git",
   "scripts": {
-    "build:babel": "NODE_ENV=production babel --config-file ./babel.config.js ./src --extensions .ts --out-dir ./dist",
+    "build:babel": "NODE_ENV=production babel ./src --extensions .ts --out-dir ./dist",
     "build:tsc": "tsc --build",
     "build": "pnpm run clean && npm-run-all build:babel build:tsc",
     "clean": "rimraf dist/*",
@@ -64,6 +64,7 @@
   },
   "dependencies": {
     "@atproto/api": "^0.6.3",
+    "@babel/runtime": "^7.22.10",
     "dotenv": "^16.3.1",
     "pi-camera": "^1.7.0",
     "suncalc": "^1.9.0"
