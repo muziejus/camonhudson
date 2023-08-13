@@ -6,8 +6,8 @@ import getSkeetText from "./get-skeet-text";
 
 const config = getConfig();
 
-// const doIRun = flipCoin(rate, latitude, longitude);
-const doIRun = "post";
+const doIRun = flipCoin(config.rate, config.latitude, config.longitude);
+// const doIRun = "post";
 
 if(doIRun){
   const text = getSkeetText(doIRun);
