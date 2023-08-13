@@ -14,7 +14,7 @@ module.exports = function (api) {
             esmodules: false,
           },
           useBuiltIns: "entry",
-          corejs: 3,
+          corejs: "3.32.0",
           modules: "commonjs",
         },
       ],

@@ -21,6 +21,7 @@
     "baseUrl": ".",
     "module": "es6",
     "experimentalDecorators": true,
+    "esModuleInterop": true
   },
   "include": ["src/**/*", "types/**/*"],
   "exclude": ["node_modules"]
