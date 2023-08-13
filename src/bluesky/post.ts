@@ -21,5 +21,5 @@ export default async function post(agent: BskyAgent, text: string, config: Camon
     },
   };
 
-  // await agent.post(postRecord);
+  await agent.post(postRecord);
 }
