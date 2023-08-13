@@ -49,6 +49,7 @@
     "@babel/preset-typescript": "^7.22.5",
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
+    "@types/node": "^20.4.10",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-formatter-pretty": "^5.0.0",
