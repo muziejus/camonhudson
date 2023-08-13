@@ -6,6 +6,7 @@ declare module "pi-camera"{
     height?: number;
     timeout?: number;
     nopreview?: boolean;
+    quality?: number;
   }
   export default class PiCamera {
     constructor(config: config);
