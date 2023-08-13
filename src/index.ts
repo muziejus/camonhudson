@@ -11,8 +11,6 @@ const doIRun = flipCoin(config.rate, config.latitude, config.longitude);
 
 if(doIRun){
   const text = getSkeetText(doIRun);
-  console.log(text);
   agent(config)
     .then(bskyAgent => post(bskyAgent, text, config));
 }
-
