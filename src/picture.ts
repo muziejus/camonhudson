@@ -11,7 +11,7 @@ export default async function picture(agent: BskyAgent){
     width: 1920,
     height: 1080,
     nopreview: true,
-    quality: 90
+    quality: 70
   });
   await camera.snap()
   // const image = fs.readFileSync("camonhudson-test.png");
