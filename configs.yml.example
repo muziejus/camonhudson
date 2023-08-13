@@ -1,5 +1,0 @@
----
-:camera: some string that indicates that the camera is connected.
-:latitude: a float
-:longitude: a float
-:rate: a float that's avg. num of photos a day / 24 / times cron runs an hour

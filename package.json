@@ -1,0 +1,71 @@
+{
+  "name": "camonhudson",
+  "version": "0.0.1",
+  "description": "A Bluesky bot posting photos of the Hudson.",
+  "private": true,
+  "repository": "git@github.com:muziejus/camonhudson.git",
+  "scripts": {
+    "build:babel": "NODE_ENV=production babel --config-file ./babel.config.js ./src --extensions .ts --out-dir ./dist",
+    "build:tsc": "tsc --build",
+    "build": "pnpm run clean && npm-run-all build:babel build:tsc",
+    "clean": "rimraf dist/*",
+    "lint": "eslint --color --format=pretty . --cache",
+    "lint:fix": "eslint --color --format=pretty . --fix",
+    "start": "pnpm run build && node dist/",
+    "dev": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "bluesky-social"
+  ],
+  "author": "Moacir P. de Sá Pereira <github@moacir.moacir.com> (http://moacir.com)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "subject-case": [
+        2,
+        "always",
+        "sentence-case"
+      ],
+      "subject-full-stop": [
+        0
+      ]
+    }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.10",
+    "@babel/core": "^7.22.10",
+    "@babel/node": "^7.22.10",
+    "@babel/plugin-transform-modules-commonjs": "^7.22.5",
+    "@babel/plugin-transform-runtime": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-typescript": "^7.22.5",
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@types/node": "^20.4.10",
+    "@types/suncalc": "^1.9.0",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-formatter-pretty": "^5.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "nodemon": "^3.0.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.1",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@atproto/api": "^0.6.3",
+    "dotenv": "^16.3.1",
+    "pi-camera": "^1.7.0",
+    "suncalc": "^1.9.0"
+  }
+}
