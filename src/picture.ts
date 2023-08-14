@@ -1,9 +1,10 @@
 import { BskyAgent } from "@atproto/api";
 import PiCamera from "pi-camera";
 import fs from "fs";
+import sharp from "sharp";
 
 export default async function picture(agent: BskyAgent){
-  const output = `${__dirname}/photo.jpg`;
+  let output = `${__dirname}/photo.jpg`;
 
   const camera = new PiCamera({
     mode: "photo",
@@ -11,14 +12,33 @@ export default async function picture(agent: BskyAgent){
     width: 1920,
     height: 1080,
     nopreview: true,
-    quality: 55,
-    thumb: "none",
-    timeout: 100,
-    encoding: "jpg"
   });
-  await camera.snap()
-  // const image = fs.readFileSync("camonhudson-test.png");
-  const image = fs.readFileSync(output);
-  // return agent.uploadBlob(image, {encoding: "image/png"});
+  try {
+    await camera.snap();
+  } catch (error) {
+    // We're not on an rpi.
+    console.log(error);
+    output = "recap-image.jpg";
+  }
+
+  await sharp(output)
+    .toFormat("jpeg", { mozjpeg: true})
+    .toFile(output = `compressed-${output}`);
+
+  let imageSize = (await fs.promises.stat(output)).size / 1024;
+  let quality = 80;
+  console.log(`${output} image is ${imageSize} kb.`);
+  let compressedOutput = output;
+
+  while(imageSize > 975 && quality > 0){
+    quality -= 5;
+    await sharp(output)
+      .toFormat("jpeg", { mozjpeg: true, quality})
+      .toFile(compressedOutput = `q${quality}-${output}`);
+    imageSize = (await fs.promises.stat(compressedOutput)).size / 1024;
+    console.log(`${compressedOutput} image is ${imageSize} kb and quality is ${quality}.`);
+  }
+
+  const image = fs.readFileSync(compressedOutput);
   return agent.uploadBlob(image, {encoding: "image/jpeg"});
 }
