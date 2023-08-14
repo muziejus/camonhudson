@@ -67,6 +67,7 @@
     "@babel/runtime": "^7.22.10",
     "dotenv": "^16.3.1",
     "pi-camera": "^1.7.0",
+    "sharp": "^0.32.4",
     "suncalc": "^1.9.0"
   }
 }
