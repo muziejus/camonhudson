@@ -23,7 +23,7 @@ export default async function picture(agent: BskyAgent){
 
   await sharp(output)
     .toFormat("jpeg", { mozjpeg: true})
-    .toFile(output = `compressed-${output}`);
+    .toFile(output = `${__dirname}/compressed-photo.jpg`);
 
   let imageSize = (await fs.promises.stat(output)).size / 1024;
   let quality = 80;
@@ -34,7 +34,7 @@ export default async function picture(agent: BskyAgent){
     quality -= 5;
     await sharp(output)
       .toFormat("jpeg", { mozjpeg: true, quality})
-      .toFile(compressedOutput = `q${quality}-${output}`);
+      .toFile(compressedOutput = `${__dirname}/q${quality}-compressed-photo.jpg`);
     imageSize = (await fs.promises.stat(compressedOutput)).size / 1024;
     console.log(`${compressedOutput} image is ${imageSize} kb and quality is ${quality}.`);
   }
