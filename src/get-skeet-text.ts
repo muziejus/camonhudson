@@ -2,7 +2,7 @@ import sunCalc from "suncalc";
 import weatherText from "./weather/text-report.js";
 
 export default async function (
-  time: "sunrise" | "sunset" | "night" | "day",
+  time: "" | "sunrise" | "sunset" | "night" | "day",
 ): Promise<string> {
   const now = new Date().toLocaleString("en-US", {
     timeZone: "America/New_York",
