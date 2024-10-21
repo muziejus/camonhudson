@@ -7,7 +7,7 @@ import getSkeetText from "./get-skeet-text.js";
 if (process.argv.includes("test")) {
   console.log("Running in testing mode\n\n");
   if (process.argv.includes("night")) {
-    getSkeetText("night").then((text: string) => console.log(text + "\n---"));
+    getSkeetText("night").then((text: string) => console.log(text));
   } else {
     getSkeetText("day").then((text: string) => console.log(text));
   }
