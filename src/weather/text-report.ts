@@ -43,7 +43,9 @@ export default async function textReport(
 
   let relativeHumidity = "";
   if (weather.properties.relativeHumidity.value) {
-    relativeHumidity = `\nRelative Humidity: ${weather.properties.relativeHumidity.value}%`;
+    relativeHumidity = `\nRelative Humidity: ${
+      Math.round(weather.properties.relativeHumidity.value * 100) / 100
+    }%`;
   }
 
   let windChill = "";
