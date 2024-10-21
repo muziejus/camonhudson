@@ -23,6 +23,10 @@ interface WeatherReport {
   };
 }
 
+function rounder(num: number): number {
+  return Math.round(num * 100) / 100;
+}
+
 export default async function textReport(
   station: string = "KNYC",
 ): Promise<string> {
@@ -43,24 +47,24 @@ export default async function textReport(
 
   let relativeHumidity = "";
   if (weather.properties.relativeHumidity.value) {
-    relativeHumidity = `\nRelative Humidity: ${
-      Math.round(weather.properties.relativeHumidity.value * 100) / 100
-    }%`;
+    relativeHumidity = `\nRelative Humidity: ${rounder(
+      weather.properties.relativeHumidity.value,
+    )}%`;
   }
 
   let windChill = "";
   if (weather.properties.windChill.value) {
-    windChill = `\nWind Chill: ${weather.properties.windChill.value}°`;
+    windChill = `\nWind Chill: ${rounder(weather.properties.windChill.value)}°`;
   }
   let heatIndex = "";
   if (weather.properties.heatIndex.value) {
-    heatIndex = `\nHeat Index: ${weather.properties.heatIndex.value}°`;
+    heatIndex = `\nHeat Index: ${rounder(weather.properties.heatIndex.value)}°`;
   }
 
   return (
     `Current conditions (via NOAA):
 ${description.emoji} ${description.description}
-Temperature: ${weather.properties.temperature.value}°
+Temperature: ${rounder(weather.properties.temperature.value)}°
 Visibility: ${weather.properties.visibility.value / 1000}km` +
     relativeHumidity +
     windChill +
