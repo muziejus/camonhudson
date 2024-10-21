@@ -1,16 +1,23 @@
-import agent from "./bluesky/agent";
-import post from "./bluesky/post";
-import getConfig from "./config";
-import flipCoin from "./flip-coin";
-import getSkeetText from "./get-skeet-text";
+import agent from "./bluesky/agent.js";
+import post from "./bluesky/post.js";
+import getConfig from "./config.js";
+import flipCoin from "./flip-coin.js";
+import getSkeetText from "./get-skeet-text.js";
 
-const config = getConfig();
+if (process.argv.includes("test")) {
+  console.log("Running in testing mode\n\n");
+  if (process.argv.includes("night")) {
+    getSkeetText("night").then((text: string) => console.log(text + "\n---"));
+  } else {
+    getSkeetText("day").then((text: string) => console.log(text));
+  }
+} else {
+  const config = getConfig();
 
-const doIRun = flipCoin(config.rate, config.latitude, config.longitude);
-//const doIRun = "post";
+  const doIRun = flipCoin(config.rate, config.latitude, config.longitude);
 
-if(doIRun){
-  const text = getSkeetText(doIRun);
-  agent(config)
-    .then(bskyAgent => post(bskyAgent, text, config));
+  if (doIRun) {
+    const text = await getSkeetText(doIRun);
+    agent(config).then((bskyAgent) => post(bskyAgent, text, config));
+  }
 }

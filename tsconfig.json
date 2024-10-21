@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "esNext",
     "allowJs": true,
-    "outDir": "dist",
-    "moduleResolution": "node",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "moduleResolution": "bundler",
+    "module": "esNext",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -19,7 +21,6 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "baseUrl": ".",
-    "module": "es6",
     "experimentalDecorators": true,
     "esModuleInterop": true
   },

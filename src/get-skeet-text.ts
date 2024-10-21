@@ -1,6 +1,9 @@
 import sunCalc from "suncalc";
+import weatherText from "./weather/text-report.js";
 
-export default function (time: "sunrise" | "sunset" | "night" | "day") {
+export default async function (
+  time: "sunrise" | "sunset" | "night" | "day",
+): Promise<string> {
   const now = new Date().toLocaleString("en-US", {
     timeZone: "America/New_York",
     weekday: "long",
@@ -12,15 +15,13 @@ export default function (time: "sunrise" | "sunset" | "night" | "day") {
     minute: "numeric",
   });
 
+  let text = `Greetings from 🗽 on ${now}.`;
+
   if (time == "sunrise") {
-    return `🌅 on ${now} in New York City.`;
-  }
-
-  if (time == "sunset") {
-    return `🌇 on ${now} in New York City.`;
-  }
-
-  if (time == "night") {
+    text = `🌅 on ${now} in New York City.`;
+  } else if (time == "sunset") {
+    text = `🌇 on ${now} in New York City.`;
+  } else if (time == "night") {
     const moonPhase = sunCalc.getMoonIllumination(new Date()).phase;
     const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"];
     let moon = moonPhases[0];
@@ -40,8 +41,10 @@ export default function (time: "sunrise" | "sunset" | "night" | "day") {
       moon = moonPhases[7];
     }
 
-    return `${moon} on ${now} in New York City.`;
+    text = `${moon} on ${now} in New York City.`;
   }
 
-  return `Greetings from 🗽 on ${now}.`;
+  const weatherReport = await weatherText("KNYC");
+
+  return `${text}\n\n${weatherReport}`;
 }
