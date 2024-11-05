@@ -41,8 +41,21 @@ export default async function textReport(
 
   const description = weatherDescription(weatherCode);
 
-  if (/night/.test(weather.properties.icon)) {
+  if (
+    /Fair/.test(description.description) &&
+    /night/.test(weather.properties.icon)
+  ) {
     description.emoji = "🌃";
+  }
+
+  let visibility = "";
+  if (
+    weather.properties.visibility.value &&
+    weather.properties.visibility.value < 1600
+  ) {
+    visibility = `\nVisibility: ${
+      weather.properties.visibility.value / 1000
+    }km`;
   }
 
   let relativeHumidity = "";
@@ -64,8 +77,8 @@ export default async function textReport(
   return (
     `Current conditions (via NOAA):
 ${description.emoji} ${description.description}
-Temperature: ${rounder(weather.properties.temperature.value)}°
-Visibility: ${weather.properties.visibility.value / 1000}km` +
+Temperature: ${rounder(weather.properties.temperature.value)}°` +
+    visibility +
     relativeHumidity +
     windChill +
     heatIndex
